@@ -46,6 +46,38 @@ class StockFeed:
 		stock_feed_list=[]
 		stock_feed_list.append(self.main_dict)	
 		print(stock_feed_list)
+	def searchfinhubstocknews(self,symbol):
+		print(self.feed)
+		# list_company=[]
+		# if(self.feed in list_company):
+		#we can get company news but it's going to be different
+		sup_dict={}
+		# main_dict=[]
+		# r=requests.get('https://finnhub.io/api/v1/news?category=general&token=bufvijf48v6qf6lbs26g')
+		r = requests.get('https://finnhub.io/api/v1/company-news?symbol='+symbol+'&from=2020-04-30&to=2020-05-01&token=bufvijf48v6qf6lbs26g')
+		# print(r.json())
+		y=r.json()
+		# print(y[0])
+		for t in y:
+			# print(t['datetime'])
+			# sup_dict.clear()
+			# sup_dict["category"]=t["category"]
+			# sup_dict["datetime"]=t["datetime"]
+			# sup_dict["headline"]=t["headline"]
+			# sup_dict["id"]=t["id"]
+			# sup_dict["image"]=t["image"]
+			# sup_dict["summary"]=t["summary"]
+			# sup_dict["url"]=t["url"]
+			# print(sup_dict["id"])
+			self.main_dict[str(t["id"])]={"id":t["id"],
+			"category":t["category"],"datetime":t["datetime"],"image":t["image"],
+			"summary":t["summary"],
+			"url":t["url"],
+			"headline":t["headline"]}
+			# print(self.main_dict)
+		stock_feed_list=[]
+		stock_feed_list.append(self.main_dict)	
+		print(stock_feed_list)
 	def searchtwitter(self,tags1):
 		print(tags1,"tags1")
 		main_dict=[]
@@ -146,8 +178,39 @@ class StockFeed:
 		print(stock_feed_list)
 
 			# print(t["category"],"1")
-	
+	def searchstockwits(self):
+		print(self.feed)
+		# list_company=[]
+		# if(self.feed in list_company):
+		#we can get company news but it's going to be different
+		sup_dict={}
+		# main_dict=[]
+		r=requests.get('https://finnhub.io/api/v1/news?category=general&token=bufvijf48v6qf6lbs26g')
+		# print(r.json())
+		y=r.json()
+		# print(y[0])
+		for t in y:
+			# print(t['datetime'])
+			# sup_dict.clear()
+			# sup_dict["category"]=t["category"]
+			# sup_dict["datetime"]=t["datetime"]
+			# sup_dict["headline"]=t["headline"]
+			# sup_dict["id"]=t["id"]
+			# sup_dict["image"]=t["image"]
+			# sup_dict["summary"]=t["summary"]
+			# sup_dict["url"]=t["url"]
+			# print(sup_dict["id"])
+			self.main_dict[str(t["id"])]={"id":t["id"],
+			"category":t["category"],"datetime":t["datetime"],"image":t["image"],
+			"summary":t["summary"],
+			"url":t["url"],
+			"headline":t["headline"]}
+			# print(self.main_dict)
+		stock_feed_list=[]
+		stock_feed_list.append(self.main_dict)	
+		print(stock_feed_list)	
 tags={'stocks':['AMZN','AAPL'],'sector':['industrials','materials','financials','Energy','Consumer Discretionary','Information technology','Communication services','Real estate','Health care','Consumer Staples','utilites']}
 feedlist=StockFeed(tags['sector'])
-feedlist.searchtwitter(tags['sector'][2])
+# feedlist.searchtwitter(tags['sector'][2])
+feedlist.searchfinhubstocknews(tags['stocks'][0])
 # feedlist.searchfinhub()
