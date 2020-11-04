@@ -34,7 +34,10 @@ for post in hot_posts:
 	# print("!")
 	# temp_dict['id']=post.id
 	temp_attributes['url']=post.url
-	temp_attributes['thumbnail']=post.thumbnail
+	if(post.thumbnail=="self"):
+		temp_attributes['thumbnail']="null"
+	else:
+		temp_attributes['thumbnail']=post.thumbnail
 	temp_attributes['title']=post.title
 	temp_attributes['selftext']=post.selftext
 	temp_attributes['created']=post.created
