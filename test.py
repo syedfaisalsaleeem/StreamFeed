@@ -10,12 +10,25 @@ tags={'stocks':{'Amazon':'AMZN','Apple':'AAPL'},
 # group of function contains only stocks
 feedlist=StockFeed()
 result1=feedlist.searchfinhubstocknews(tags['stocks']['Amazon'])
-#print(result1)
+# # print(result1)
 result2=feedlist.searchtwitter(tags['stocks']['Amazon'])
 # print(result2)
-result3=feedlist.searchtwitter(tags['stocks']['Amazon'])
-print(result3)
+result3=feedlist.searchtiingo('stocks',tags['stocks']['Amazon'])
+# # print(result3)
+result4=feedlist.searchreddit(tags['stocks']['Amazon'])
+print(result4)
 
+
+#group of function contains only sector
+feedlist=StockFeed()
+result1=feedlist.searchfinhubstocknews(tags['stocks']['Amazon'])
+# # print(result1)
+result2=feedlist.searchtwitter(tags['stocks']['Amazon'])
+# print(result2)
+result3=feedlist.searchtiingo('stocks',tags['stocks']['Amazon'])
+# # print(result3)
+result4=feedlist.searchreddit(tags['stocks']['Amazon'])
+print(result4)
 
 
 

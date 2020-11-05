@@ -63,6 +63,7 @@ class StockFeed:
 	                  access_token_key=token.access_token_key_twitter,
 	                  access_token_secret=token.access_token_secret_twitter)
 			# print(api.tweet_mode)
+			# print(api.tweet_mode,"worked")
 			results = api.GetSearch(
 			    raw_query="q="+tags1)
 			# y=results[0].AsDict()
@@ -146,21 +147,22 @@ class StockFeed:
 				"summary":t["body"],
 				"url":t['source']["url"],
 				"headline":t['source']["title"]}
-			stock_feed_list=[]
-			stock_feed_list.append(self.main_dict)	
-			print(stock_feed_list)
+			return self.main_dict
+			# stock_feed_list=[]
+			# stock_feed_list.append(self.main_dict)	
+			# print(stock_feed_list)
 		except:
-			print("error")
+			return self.main_dict
+			# print("error")
 	def searchtiingo(self,typeof,sector):
 		try:
 			# For the latest news
 			if(typeof=="trending"):
-				print(self.feed)
 				headers = {
 				'Content-Type': 'application/json'
 				}
-				token=requests.get("https://api.tiingo.com/tiingo/news?&token="+token.tiingo_token, headers=headers)
-				y=token.json()
+				token1=requests.get("https://api.tiingo.com/tiingo/news?&token="+token.tiingo_token, headers=headers)
+				y=token1.json()
 				for t in y:
 					# print(t)
 					self.main_dict[str(t["id"])]={"id":t["id"],
@@ -170,16 +172,16 @@ class StockFeed:
 					"summary":t["description"],
 					"url":t["url"],
 					"headline":t["title"]}
-				stock_feed_list=[]
-				stock_feed_list.append(self.main_dict)	
-				print(stock_feed_list)
+				return self.main_dict
+				# stock_feed_list=[]
+				# stock_feed_list.append(self.main_dict)	
+				# print(stock_feed_list)
 			elif(typeof=="sector"):
-				print(self.feed)
 				headers = {
 				'Content-Type': 'application/json'
 				}
-				token=requests.get("https://api.tiingo.com/tiingo/news?tags="+sector+"&token="+token.tiingo_token, headers=headers)
-				y=token.json()
+				token1=requests.get("https://api.tiingo.com/tiingo/news?tags="+sector+"&token="+token.tiingo_token, headers=headers)
+				y=token1.json()
 				for t in y:
 					# print(t)
 					self.main_dict[str(t["id"])]={"id":t["id"],
@@ -189,16 +191,16 @@ class StockFeed:
 					"summary":t["description"],
 					"url":t["url"],
 					"headline":t["title"]}
-				stock_feed_list=[]
-				stock_feed_list.append(self.main_dict)	
-				print(stock_feed_list)		
+				return self.main_dict
+				# stock_feed_list=[]
+				# stock_feed_list.append(self.main_dict)	
+				# print(stock_feed_list)		
 			elif(typeof=="stocks"):
-				print(self.feed)
 				headers = {
 				'Content-Type': 'application/json'
 				}
-				token=requests.get("https://api.tiingo.com/tiingo/news?tickers="+sector+"&token="+token.tiingo_token, headers=headers)
-				y=token.json()
+				token1=requests.get("https://api.tiingo.com/tiingo/news?tickers="+sector+"&token="+token.tiingo_token, headers=headers)
+				y=token1.json()
 				for t in y:
 					# print(t)
 					self.main_dict[str(t["id"])]={"id":t["id"],
@@ -208,59 +210,38 @@ class StockFeed:
 					"summary":t["description"],
 					"url":t["url"],
 					"headline":t["title"]}
-				stock_feed_list=[]
-				stock_feed_list.append(self.main_dict)	
-				print(stock_feed_list)	
+				return self.main_dict
+				# stock_feed_list=[]
+				# stock_feed_list.append(self.main_dict)	
+				# print(stock_feed_list)	
 		except:
-			print("error")
+			return self.main_dict
+			# print("error")
 	def searchreddit(self,sector):
-		print("none")
-	# 		reddit_client_id="RQCMwDEkpL9c_A"
-	# reddit_client_secret="5tS4n1UNUIw6ZnQmXuMXxQ89Vbtkjw"
-	# reddit_user_agent="Application for Stock"
-		client_id=token.reddit_client_id
-		client_secret=token.reddit_client_secret
-		user_agent=token.reddit_user_agent
-		reddit = praw.Reddit(client_id=client_id, client_secret=client_secret,password=token.reddit_password,username=token.reddit_username,user_agent=user_agent)
-		# print(reddit.user.me())
-		# # print(reddit)
-		# # reddit.subreddit("test").submit("Test Submission", url="https://reddit.com")
-		# # hot_posts = reddit.subreddit('MachineLearning').hot(limit=10)
-		# # print(hot_posts)
-		# # for post in hot_posts:
-		# # 	# print("!")
-		# #     print(post.link_type)
-		# # for moderator in reddit.subreddit("MachineLearning").moderator():
-		# #     print(moderator)
-		# # ml_subreddit = reddit.subreddit('MachineLearning')
+		try:
+			client_id=token.reddit_client_id
+			client_secret=token.reddit_client_secret
+			user_agent=token.reddit_user_agent
+			reddit = praw.Reddit(client_id=client_id, client_secret=client_secret,password=token.reddit_password,username=token.reddit_username,user_agent=user_agent)
+			hot_posts = reddit.subreddit(sector).hot(limit=100)
+			temp_dict={}
+			temp_attributes={}
+			for post in hot_posts:
+				if("self" in post.thumbnail or "spoiler" in post.thumbnail or "default" in post.thumbnail):
+					image="null"
+				else:
+					image=post.thumbnail
+				self.main_dict[str(post.id)]={"id":post.id,
+				"category":sector,
+				"datetime":post.created,
+				"image":image,
+				"summary":post.selftext,
+				"url":post.url,
+				"headline":post.title}
+			return self.main_dict
+		except:
+			return self.main_dict
 
-		# # print(ml_subreddit.description)
-
-		# # import pandas as pd
-		# # posts = []
-		# # ml_subreddit = reddit.subreddit('MachineLearning')
-		# # for post in ml_subreddit.hot(limit=10):
-		# #     posts.append([post.title, post.score, post.id, post.subreddit, post.url, post.num_comments, post.selftext, post.created])
-		# # posts = pd.DataFrame(posts,columns=['title', 'score', 'id', 'subreddit', 'url', 'num_comments', 'body', 'created'])
-		# # print(posts)
-		hot_posts = reddit.subreddit(sector).hot(limit=100)
-		temp_dict={}
-		temp_attributes={}
-		for post in hot_posts:
-			if("self" in post.thumbnail or "spoiler" in post.thumbnail or "default" in post.thumbnail):
-				image="null"
-			else:
-				image=post.thumbnail
-			self.main_dict[str(post.id)]={"id":post.id,
-			"category":sector,
-			"datetime":post.created,
-			"image":image,
-			"summary":post.selftext,
-			"url":post.url,
-			"headline":post.title}
-		stock_feed_list=[]
-		stock_feed_list.append(self.main_dict)	
-		print(stock_feed_list)	
 
 
 ##there maybe many different feeds with same id because user follows it we have to get unique only when i will be making an object and putting
