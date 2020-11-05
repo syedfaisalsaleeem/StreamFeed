@@ -2,9 +2,9 @@
 
 # dependencies
 
-.creating_token.py
-.stock_feed.py
-.creating_feed.py
+.creating_token
+.stock_feed
+.creating_feed
 
 
 
