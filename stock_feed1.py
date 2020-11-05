@@ -10,7 +10,6 @@ class StockFeed:
 		self.main_dict={}
 
 	def searchfinhub(self):
-		print(token.finhub_token)
 		try:
 			sup_dict={}
 			r=requests.get('https://finnhub.io/api/v1/news?category=general&token='+token.finhub_token)
@@ -128,12 +127,14 @@ class StockFeed:
 
 			# print(t["category"],"1")
 	def searchstockwits(self,sector):
+		# print(token.stockwits_token)
 		try:
 			headers = {
 			'Content-Type': 'application/json'
 			}
-			token=requests.get("https://api.stocktwits.com/api/2/streams/trending.json?access_token="+token.stockwits_token,headers)
-			y=json.loads(token._content)
+			token1=requests.get("https://api.stocktwits.com/api/2/streams/trending.json?access_token="+token.stockwits_token,headers)
+			# print(token1._content)
+			y=json.loads(token1._content)
 			# print(y['messages'])
 			# sup_dict={}
 			# r=requests.get('https://finnhub.io/api/v1/news?category=general&token=bufvijf48v6qf6lbs26g')
@@ -223,7 +224,7 @@ class StockFeed:
 			client_secret=token.reddit_client_secret
 			user_agent=token.reddit_user_agent
 			reddit = praw.Reddit(client_id=client_id, client_secret=client_secret,password=token.reddit_password,username=token.reddit_username,user_agent=user_agent)
-			hot_posts = reddit.subreddit(sector).hot(limit=100)
+			hot_posts = reddit.subreddit("all").search(sector,limit=500)
 			temp_dict={}
 			temp_attributes={}
 			for post in hot_posts:

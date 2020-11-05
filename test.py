@@ -5,37 +5,48 @@ client = stream.connect('q2hzgpctc2e5', 'cgrx2vxsy6kmr4m76mt648azhfcucjkyev2v27a
 # feedlist=CreatingFeed(tags[0])
 # feedlist.searchfinhub()
 tags={'stocks':{'Amazon':'AMZN','Apple':'AAPL'},
-'sector':['trending','industrials','materials','financials','Energy','Consumer Discretionary','Information technology','Communication services','Real estate','Health care','Consumer Staples','utilites']}
+'sector':['industrials','materials','financials','Energy','Consumer Discretionary','Information technology','Communication services','Real estate','Health care','Consumer Staples','utilites']}
 
 # group of function contains only stocks
-feedlist=StockFeed()
-result1=feedlist.searchfinhubstocknews(tags['stocks']['Amazon'])
+# feedlist=StockFeed()
+#result1=feedlist.searchfinhubstocknews(tags['stocks']['Amazon'])
 # # print(result1)
-result2=feedlist.searchtwitter(tags['stocks']['Amazon'])
+#result2=feedlist.searchtwitter(tags['stocks']['Amazon'])
 # print(result2)
-result3=feedlist.searchtiingo('stocks',tags['stocks']['Amazon'])
+#result3=feedlist.searchtiingo('stocks',tags['stocks']['Amazon'])
 # # print(result3)
-result4=feedlist.searchreddit(tags['stocks']['Amazon'])
-print(result4)
+# result4=feedlist.searchreddit(tags['stocks']['Amazon'])
+# print(result4)
 
 
 #group of function contains only sector
-feedlist=StockFeed()
-result1=feedlist.searchfinhubstocknews(tags['stocks']['Amazon'])
-# # print(result1)
-result2=feedlist.searchtwitter(tags['stocks']['Amazon'])
-# print(result2)
-result3=feedlist.searchtiingo('stocks',tags['stocks']['Amazon'])
-# # print(result3)
-result4=feedlist.searchreddit(tags['stocks']['Amazon'])
-print(result4)
+# feedlist=StockFeed()
+# # result1=feedlist.searchtwitter(tags['sector'][1])
+# # # print(result1)
+# # result2=feedlist.searchtiingo('sector',tags['sector'][1])
+# # # print(result2)
+# result3=feedlist.searchreddit(tags['sector'][1])
+# print(result3)
 
 
+
+##group of latest trends and this user will be folowed by everyone
 
 
 
 
 ###in trending the must will be searchfinhub() function and searchstockwits() function
+feedlist=StockFeed()
+# result1=feedlist.searchfinhub()
+# print(result1)
+# result2=feedlist.searchtwitter("trending")
+# print(result2)
+# result3=feedlist.searchtiingo('trending',"trending")
+# print(result3)
+# result4=feedlist.searchreddit("trending")
+# print(result4)
+result5=feedlist.searchstockwits("trending")
+print(result5)
 
 # x=feedlist.searchfinhub()
 # print(x)
