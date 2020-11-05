@@ -3,14 +3,17 @@ import twitter
 import json
 import praw
 from datetime import date
+from creating_token import token
+# print(token.finhub_token)
 class StockFeed:
 	def __init__(self):
 		self.main_dict={}
 
 	def searchfinhub(self):
+		print(token.finhub_token)
 		try:
 			sup_dict={}
-			r=requests.get('https://finnhub.io/api/v1/news?category=general&token=bufvijf48v6qf6lbs26g')
+			r=requests.get('https://finnhub.io/api/v1/news?category=general&token='+token.finhub_token)
 			y=r.json()
 			for t in y:
 				self.main_dict[str(t["id"])]={"id":t["id"],
@@ -35,7 +38,7 @@ class StockFeed:
 			lastyear=str(int(d2)-1)+d1
 			sup_dict={}
 			# print(lastyear,today)
-			r = requests.get('https://finnhub.io/api/v1/company-news?symbol='+symbol+'&from='+lastyear+'&to='+str(today)+'&token=bufvijf48v6qf6lbs26g')
+			r = requests.get('https://finnhub.io/api/v1/company-news?symbol='+symbol+'&from='+lastyear+'&to='+str(today)+'&token='+token.finhub_token)
 			y=r.json()
 			for t in y:
 				self.main_dict[str(t["id"])]={"id":t["id"],
@@ -55,10 +58,10 @@ class StockFeed:
 		try:
 			main_dict=[]
 			sup_dict={}
-			api = twitter.Api(consumer_key="0U21owMEyc6Y3QskvqyTtb89i",
-	                  consumer_secret="PJNZBd0jbP61hPROazS02TzvtZxJjMeUBsycF0jUMVixLtF6lZ",
-	                  access_token_key="1321121639925362688-VRGp4FjSiN7RKthPETXeHrDVC1ocOC",
-	                  access_token_secret="ikI8InyZg7WRdoz5EGiPhd1Hp7dpDWmtPTkDDfOl9H8ds")
+			api = twitter.Api(consumer_key=token.consumer_key_twitter,
+	                  consumer_secret=token.consumer_secret_twitter,
+	                  access_token_key=token.access_token_key_twitter,
+	                  access_token_secret=token.access_token_secret_twitter)
 			# print(api.tweet_mode)
 			results = api.GetSearch(
 			    raw_query="q="+tags1)
@@ -128,7 +131,7 @@ class StockFeed:
 			headers = {
 			'Content-Type': 'application/json'
 			}
-			token=requests.get("https://api.stocktwits.com/api/2/streams/trending.json?access_token=f77887ee6a4a7d3265be6054ce3b6686768a9467",headers)
+			token=requests.get("https://api.stocktwits.com/api/2/streams/trending.json?access_token="+token.stockwits_token,headers)
 			y=json.loads(token._content)
 			# print(y['messages'])
 			# sup_dict={}
@@ -156,7 +159,7 @@ class StockFeed:
 				headers = {
 				'Content-Type': 'application/json'
 				}
-				token=requests.get("https://api.tiingo.com/tiingo/news?&token=75b0b300db1aff2a0addbb762e800f1f0ba78fab", headers=headers)
+				token=requests.get("https://api.tiingo.com/tiingo/news?&token="+token.tiingo_token, headers=headers)
 				y=token.json()
 				for t in y:
 					# print(t)
@@ -175,7 +178,7 @@ class StockFeed:
 				headers = {
 				'Content-Type': 'application/json'
 				}
-				token=requests.get("https://api.tiingo.com/tiingo/news?tags="+sector+"&token=75b0b300db1aff2a0addbb762e800f1f0ba78fab", headers=headers)
+				token=requests.get("https://api.tiingo.com/tiingo/news?tags="+sector+"&token="+token.tiingo_token, headers=headers)
 				y=token.json()
 				for t in y:
 					# print(t)
@@ -194,7 +197,7 @@ class StockFeed:
 				headers = {
 				'Content-Type': 'application/json'
 				}
-				token=requests.get("https://api.tiingo.com/tiingo/news?tickers="+sector+"&token=75b0b300db1aff2a0addbb762e800f1f0ba78fab", headers=headers)
+				token=requests.get("https://api.tiingo.com/tiingo/news?tickers="+sector+"&token="+token.tiingo_token, headers=headers)
 				y=token.json()
 				for t in y:
 					# print(t)
@@ -212,10 +215,13 @@ class StockFeed:
 			print("error")
 	def searchreddit(self,sector):
 		print("none")
-		client_id="RQCMwDEkpL9c_A"
-		client_secret="5tS4n1UNUIw6ZnQmXuMXxQ89Vbtkjw"
-		user_agent="Application for Stock"
-		reddit = praw.Reddit(client_id=client_id, client_secret=client_secret,password="neverleavefootball10A",username="Ok-Studio7215",user_agent=user_agent)
+	# 		reddit_client_id="RQCMwDEkpL9c_A"
+	# reddit_client_secret="5tS4n1UNUIw6ZnQmXuMXxQ89Vbtkjw"
+	# reddit_user_agent="Application for Stock"
+		client_id=token.reddit_client_id
+		client_secret=token.reddit_client_secret
+		user_agent=token.reddit_user_agent
+		reddit = praw.Reddit(client_id=client_id, client_secret=client_secret,password=token.reddit_password,username=token.reddit_username,user_agent=user_agent)
 		# print(reddit.user.me())
 		# # print(reddit)
 		# # reddit.subreddit("test").submit("Test Submission", url="https://reddit.com")
